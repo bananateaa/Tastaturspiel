@@ -3,41 +3,94 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tastatur-Spiel: Einzigartige Zeichen (Live-Counter)</title>
+    <title>Tastatur-Spiel: Einzigartige Zeichen (Live-Counter mit Meilensteinen)</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             text-align: center;
-            margin-top: 50px;
+            margin-top: 30px;
+            background-color: #f5f5f5;
         }
         textarea {
             width: 300px;
             height: 100px;
             font-size: 16px;
             margin: 10px;
+            padding: 10px;
+            border: 2px solid #ccc;
+            border-radius: 5px;
         }
         #result {
             margin-top: 20px;
             font-weight: bold;
             font-size: 18px;
         }
+        #milestone {
+            margin-top: 15px;
+            font-size: 20px;
+            font-weight: bold;
+            height: 30px;
+            transition: all 0.5s ease;
+        }
+        .milestone-10 {
+            color: #4CAF50;
+            animation: pulse 1s;
+        }
+        .milestone-50 {
+            color: #2196F3;
+            animation: pulse 1s;
+        }
+        .milestone-100 {
+            color: #FF9800;
+            animation: pulse 1s;
+        }
+        .milestone-150 {
+            color: #F44336;
+            animation: pulse 1s;
+            font-size: 24px;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
     </style>
 </head>
 <body>
     <h1>Tastatur-Spiel: Einzigartige Zeichen</h1>
     <p>Tippe so viele einzigartige Zeichen wie möglich in das Feld unten:</p>
-    <textarea id="inputText" placeholder="Hier tippen..." onpaste="return false;"></textarea>
+    <textarea id="inputText" placeholder="Hier tippen..."></textarea>
     <div id="result">Anzahl einzigartiger Zeichen: 0</div>
+    <div id="milestone"></div>
 
     <script>
         const inputText = document.getElementById("inputText");
         const resultDiv = document.getElementById("result");
+        const milestoneDiv = document.getElementById("milestone");
 
         inputText.addEventListener("input", function() {
             const text = inputText.value;
             const uniqueChars = new Set(text);
             const count = uniqueChars.size;
             resultDiv.textContent = `Anzahl einzigartiger Zeichen: ${count}`;
+
+            // Meilenstein-Prüfung
+            if (count >= 150) {
+                milestoneDiv.textContent = "WAHNSINN!!! 🎉";
+                milestoneDiv.className = "milestone-150";
+            } else if (count >= 100) {
+                milestoneDiv.textContent = "Hervorragend! 👏";
+                milestoneDiv.className = "milestone-100";
+            } else if (count >= 50) {
+                milestoneDiv.textContent = "Super weiter so! 😊";
+                milestoneDiv.className = "milestone-50";
+            } else if (count >= 10) {
+                milestoneDiv.textContent = "Guter Anfang! 😃";
+                milestoneDiv.className = "milestone-10";
+            } else {
+                milestoneDiv.textContent = "";
+                milestoneDiv.className = "";
+            }
         });
     </script>
 </body>
